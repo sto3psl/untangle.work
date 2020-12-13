@@ -1,0 +1,23 @@
+.list {
+  @apply grid bg-gray-200 rounded;
+  width: clamp(15rem, 35vw, 20rem);
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.dropList {
+  @apply absolute w-full bg-gray-200 p-2 min-h-full;
+}
+
+.draggingOver {
+  composes: dropList;
+  @apply bg-gradient-to-r from-blue-400 to-blue-500;
+}
+
+.item {
+  @apply bg-white rounded p-3 mb-2 select-none border-2 border-white;
+}
+
+.itemDragging {
+  composes: item;
+  @apply border-blue-400;
+}

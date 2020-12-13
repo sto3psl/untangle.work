@@ -1,0 +1,33 @@
+{
+  "name": "dnd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "snowpack dev",
+    "build": "snowpack build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@snowpack/plugin-postcss": "1.0.10",
+    "@snowpack/plugin-webpack": "2.2.0",
+    "autoprefixer": "10.1.0",
+    "hashbow": "1.1.1",
+    "idb-keyval": "3.2.0",
+    "lodash-es": "4.17.15",
+    "postcss": "8.2.1",
+    "postcss-cli": "8.3.0",
+    "preact": "10.5.7",
+    "prettier": "2.2.1",
+    "react-beautiful-dnd": "13.0.0",
+    "snowpack": "3.0.0-rc.1",
+    "tailwindcss": "2.0.1",
+    "wouter-preact": "2.6.0"
+  },
+  "prettier": {
+    "semi": false
+  }
+}

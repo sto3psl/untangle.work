@@ -1,0 +1,8 @@
+.selectWrapper:after {
+  @apply absolute top-0 right-0 p-2 pointer-events-none;
+  content: "⬇️";
+}
+
+.select {
+  @apply appearance-none p-2 bg-gray-100 rounded w-full cursor-pointer;
+}
