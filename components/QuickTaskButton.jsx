@@ -33,10 +33,7 @@ export function QuickTaskButton({ onCreate, children }) {
   function handleBlur(e) {
     if (!e.target.value.trim()) {
       setShowInput(false)
-      return
     }
-
-    onCreate && onCreate(e)
   }
 
   return showInput ? (
