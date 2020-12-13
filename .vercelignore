@@ -1,5 +1,0 @@
-.git/
-.gitignore
-.nova/
-*.config.js
-*.json
