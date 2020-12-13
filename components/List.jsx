@@ -45,7 +45,7 @@ export function ListItem({ id, index, children, tags }) {
           >
             {tags.length ? (
               <div className="pb-2">
-                {tags.map((tag) => {
+                {tags.filter(Boolean).map((tag) => {
                   const color = hashbow(tag.toLowerCase(), 90)
                   return (
                     <span

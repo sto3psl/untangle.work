@@ -2,14 +2,11 @@
 import { h } from "preact"
 import { useRef, useEffect } from "preact/hooks"
 import { Link, useLocation } from "wouter-preact"
-import { useLists } from "../hooks/useTaskStore.js"
-import get from "lodash-es/get"
 import set from "lodash-es/set"
 import styles from "./TaskView.module.css"
 
-export default function TaskView({ task, update, del }) {
+export default function TaskView({ task, lists, update, del }) {
   const [, setLocation] = useLocation()
-  const [lists] = useLists()
 
   const form = useRef(null)
   const modal = useRef(null)
@@ -21,16 +18,17 @@ export default function TaskView({ task, update, del }) {
   function handleSubmit(e) {
     e.preventDefault()
     const data = new FormData(form.current)
-    const newTask = {}
+    const newTask = { id: task.id }
     for (const [key, value] of data.entries()) {
       set(newTask, key, value)
     }
 
     update(newTask)
+    setLocation("/")
   }
 
   function handleDelete() {
-    del()
+    del(task)
     setLocation("/")
   }
 
@@ -91,7 +89,7 @@ export default function TaskView({ task, update, del }) {
               <div class="pb-2 font-bold">Liste</div>
               <div className={styles.selectWrapper}>
                 <select className={styles.select} name="list" value={task.list}>
-                  {lists.map((list) => (
+                  {Array.from(lists.keys()).map((list) => (
                     <option value={list}>{list}</option>
                   ))}
                 </select>

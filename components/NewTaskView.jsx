@@ -4,12 +4,10 @@ import { useRef, useEffect } from "preact/hooks"
 import { Link, useLocation } from "wouter-preact"
 import get from "lodash-es/get"
 import set from "lodash-es/set"
-import { useLists } from "../hooks/useTaskStore.js"
 import styles from "./TaskView.module.css"
 
-export default function TaskView({ create }) {
+export default function NewTaskView({ create, lists }) {
   const [, setLocation] = useLocation()
-  const [lists] = useLists()
 
   const form = useRef(null)
   const modal = useRef(null)
@@ -26,9 +24,8 @@ export default function TaskView({ create }) {
       set(newTask, key, value)
     }
 
-    create(newTask).then((task) => {
-      setLocation(`/`)
-    })
+    create(newTask)
+    setLocation(`/`)
   }
 
   function close(e) {
@@ -86,7 +83,7 @@ export default function TaskView({ create }) {
               <div class="pb-2 font-bold">Liste</div>
               <div className={styles.selectWrapper}>
                 <select className={styles.select} name="list">
-                  {lists.map((list) => (
+                  {Array.from(lists.keys()).map((list) => (
                     <option value={list}>{list}</option>
                   ))}
                 </select>

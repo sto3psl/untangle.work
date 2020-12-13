@@ -15,7 +15,12 @@ import { useTaskStore } from "./hooks/useTaskStore"
 import styles from "./index.module.css"
 
 function App() {
-  const [lists, tasks, { save, updatePosition, changeList }] = useTaskStore()
+  const [
+    lists,
+    tasks,
+    { save, update, del, updatePosition, changeList },
+  ] = useTaskStore()
+
   function onDragEnd({ source, destination }) {
     // dropped outside the list
     if (!destination) {
@@ -73,16 +78,19 @@ function App() {
               title={name}
               id={name}
               items={list}
-              renderListItem={(item, index) => (
-                <ListItem
-                  key={item.id}
-                  id={item.id}
-                  index={index}
-                  tags={item.tags}
-                >
-                  {item.doc.title}
-                </ListItem>
-              )}
+              renderListItem={(id, index) => {
+                const item = tasks[id]
+                return (
+                  <ListItem
+                    key={item.id}
+                    id={item.id}
+                    index={index}
+                    tags={item.tags}
+                  >
+                    {item.doc.title}
+                  </ListItem>
+                )
+              }}
             >
               {!index && (
                 <QuickTaskButton onCreate={handleTaskCreation}>
@@ -95,11 +103,18 @@ function App() {
       </div>
       <Switch>
         <Route path="/neu">
-          <NewTaskView create={save} />
+          <NewTaskView create={save} lists={lists} />
         </Route>
         <Route path="/:task">
           {(params) =>
-            tasks[params.task] ? <TaskView {...tasks[params.task]} /> : null
+            tasks[params.task] ? (
+              <TaskView
+                task={tasks[params.task]}
+                lists={lists}
+                update={update}
+                del={del}
+              />
+            ) : null
           }
         </Route>
       </Switch>
