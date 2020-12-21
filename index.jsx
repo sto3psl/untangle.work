@@ -3,9 +3,9 @@ import "./main.css"
 import { h, Fragment } from "preact"
 import ReactDOM from "preact/compat"
 import { Route, Link, Switch } from "wouter-preact"
-import { DragDropContext } from "react-beautiful-dnd"
+import { DragDropContext, Draggable } from "react-beautiful-dnd"
 
-import { List, ListItem } from "./components/List.jsx"
+import { List, Board, ListItem } from "./components/List.jsx"
 import { QuickTaskButton } from "./components/QuickTaskButton.jsx"
 import TaskView from "./components/TaskView.jsx"
 import NewTaskView from "./components/NewTaskView.jsx"
@@ -18,12 +18,20 @@ function App() {
   const [
     lists,
     tasks,
-    { save, update, del, updatePosition, changeList },
+    { save, update, del, updatePosition, changeList, reorderLists },
   ] = useTaskStore()
 
-  function onDragEnd({ source, destination }) {
+  function onDragEnd({ source, destination, type }) {
     // dropped outside the list
     if (!destination) {
+      return
+    }
+
+    if (type === "COLUMN") {
+      reorderLists({
+        previousIndex: source.index,
+        index: destination.index,
+      })
       return
     }
 
@@ -71,36 +79,42 @@ function App() {
           ✚ Neu
         </Link>
       </header>
-      <div className="grid grid-flow-col gap-4 col-span-2 p-2">
+      <main className="grid col-span-2">
         <DragDropContext onDragEnd={onDragEnd}>
-          {Array.from(lists).map(([name, list], index) => (
-            <List
-              title={name}
-              id={name}
-              items={list}
-              renderListItem={(id, index) => {
-                const item = tasks[id]
-                return (
-                  <ListItem
-                    key={item.id}
-                    id={item.id}
-                    index={index}
-                    tags={item.tags}
-                  >
-                    {item.doc.title}
-                  </ListItem>
-                )
-              }}
-            >
-              {!index && (
-                <QuickTaskButton onCreate={handleTaskCreation}>
-                  Neue Aufgabe
-                </QuickTaskButton>
-              )}
-            </List>
-          ))}
+          <Board
+            id="list-container"
+            items={Array.from(lists)}
+            renderListItem={([name, list], index) => (
+              <List
+                title={name}
+                index={index}
+                id={name}
+                items={list}
+                renderListItem={(id, index) => {
+                  const item = tasks[id]
+                  return (
+                    <ListItem
+                      key={item.id}
+                      id={item.id}
+                      index={index}
+                      tags={item.tags}
+                    >
+                      {item.doc.title}
+                    </ListItem>
+                  )
+                }}
+              >
+                {!index && (
+                  <QuickTaskButton onCreate={handleTaskCreation}>
+                    Neue Aufgabe
+                  </QuickTaskButton>
+                )}
+              </List>
+            )}
+          />
         </DragDropContext>
-      </div>
+      </main>
+      <footer className="h-full sticky left-0 flex"></footer>
       <Switch>
         <Route path="/neu">
           <NewTaskView create={save} lists={lists} />

@@ -1,5 +1,5 @@
 .list {
-  @apply grid bg-gray-200 rounded;
+  @apply grid h-full rounded;
   width: clamp(15rem, 35vw, 20rem);
   grid-template-rows: auto minmax(0, 1fr);
 }
@@ -10,7 +10,15 @@
 
 .draggingOver {
   composes: dropList;
-  @apply bg-gradient-to-r from-blue-400 to-blue-500;
+  @apply bg-gradient-to-r to-blue-300 from-blue-400;
+}
+
+.dropListHorizontal {
+  @apply flex flex-row min-w-full w-max min-h-full;
+}
+
+.draggingOverHorizontal {
+  composes: dropListHorizontal;
 }
 
 .item {

@@ -10,5 +10,8 @@ module.exports = {
   buildOptions: {
     clean: true,
   },
+  devOptions: {
+    open: "none",
+  },
   plugins: ["@snowpack/plugin-postcss", "@snowpack/plugin-webpack"],
 }

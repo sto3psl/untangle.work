@@ -5,29 +5,65 @@ import { Droppable, Draggable } from "react-beautiful-dnd"
 import hashbow from "hashbow"
 import styles from "./List.module.css"
 
-export function List({ id, children, items, title, renderListItem }) {
+export function List({ id, index, children, items, title, renderListItem }) {
   return (
-    <div className={styles.list}>
-      {title && (
-        <h2 className="p-2 text-gray-900 text-xl font-black">{title}</h2>
-      )}
-      <Droppable droppableId={id}>
-        {(provided, snapshot) => (
-          <div className="overflow-y-scroll rounded">
-            <div
-              ref={provided.innerRef}
-              className={
-                snapshot.isDraggingOver ? styles.draggingOver : styles.dropList
-              }
+    <Draggable draggableId={id} key={id} id={id} index={index}>
+      {(provided, snapshot) => (
+        <div
+          className="p-2"
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          style={provided.draggableProps.style}
+        >
+          <div className={styles.list}>
+            <h2
+              className="p-2 text-gray-900 text-xl font-black"
+              {...provided.dragHandleProps}
             >
-              {items.map(renderListItem)}
-              {provided.placeholder}
-              <div className="flex">{children}</div>
-            </div>
+              {title}
+            </h2>
+            <Droppable droppableId={id} type="LIST">
+              {(provided, snapshot) => (
+                <div className="overflow-y-scroll rounded">
+                  <div
+                    ref={provided.innerRef}
+                    className={
+                      snapshot.isDraggingOver
+                        ? styles.draggingOver
+                        : styles.dropList
+                    }
+                  >
+                    {items.map(renderListItem)}
+                    {provided.placeholder}
+                    <div className="flex">{children}</div>
+                  </div>
+                </div>
+              )}
+            </Droppable>
           </div>
-        )}
-      </Droppable>
-    </div>
+        </div>
+      )}
+    </Draggable>
+  )
+}
+
+export function Board({ id, children, items, renderListItem }) {
+  return (
+    <Droppable droppableId={id} direction="horizontal" type="COLUMN">
+      {(provided, snapshot) => (
+        <div
+          ref={provided.innerRef}
+          className={
+            snapshot.isDraggingOver
+              ? styles.draggingOverHorizontal
+              : styles.dropListHorizontal
+          }
+        >
+          {items.map(renderListItem)}
+          {provided.placeholder}
+        </div>
+      )}
+    </Droppable>
   )
 }
 
