@@ -17,7 +17,7 @@ export function List({ id, index, children, items, title, renderListItem }) {
         >
           <div className={styles.list}>
             <h2
-              className="p-2 text-gray-900 text-xl font-black"
+              className="p-2 text-gray-900 text-xl font-black z-10"
               {...provided.dragHandleProps}
             >
               {title}
@@ -68,34 +68,41 @@ export function Board({ id, children, items, renderListItem }) {
 }
 
 export function ListItem({ id, index, children, tags }) {
+  const filteredTags = tags.filter(Boolean)
+  const visibleTags = 4
   return (
     <Draggable draggableId={id} index={index}>
       {(provided, snapshot) => (
         <Link href={`/${id}`}>
-          <div
+          <a
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             className={snapshot.isDragging ? styles.itemDragging : styles.item}
             style={provided.draggableProps.style}
           >
-            {tags.length ? (
-              <div className="pb-2">
-                {tags.filter(Boolean).map((tag) => {
-                  const color = hashbow(tag.toLowerCase(), 90)
+            {filteredTags.length ? (
+              <div className="pb-2space-y-1">
+                {filteredTags.slice(0, visibleTags).map((tag) => {
+                  const color = hashbow(tag, 90)
                   return (
                     <span
-                      className="rounded text-sm px-1 font-bold border-2"
+                      className="inline-block rounded text-xs px-1 font-bold border-2 mr-1"
                       style={`border-color: ${color}; color: ${color}`}
                     >
                       {tag}
                     </span>
                   )
                 })}
+                {filteredTags.length >= visibleTags ? (
+                  <span className="inline-block rounded text-xs font-boldmr-1">
+                    ...
+                  </span>
+                ) : null}
               </div>
             ) : null}
             <div>{children}</div>
-          </div>
+          </a>
         </Link>
       )}
     </Draggable>

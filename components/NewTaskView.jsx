@@ -34,7 +34,7 @@ export default function NewTaskView({ create, lists }) {
     }
   }
 
-  function handleKeyPress(e) {
+  function handleKeyUp(e) {
     if (e.key === "Escape") {
       setLocation("/")
     }
@@ -47,11 +47,11 @@ export default function NewTaskView({ create, lists }) {
     >
       <div
         ref={modal}
-        className="bg-white p-4 rounded w-full max-w-2xl max-h-full overflow-auto"
+        className="bg-white rounded w-full max-w-2xl max-h-full overflow-auto"
         tabIndex={0}
-        onKeyPress={handleKeyPress}
+        onKeyUp={handleKeyUp}
       >
-        <form ref={form} onSubmit={handleSubmit}>
+        <form class="p-4" ref={form} onSubmit={handleSubmit}>
           <label className="block pb-2">
             <div class="pb-2 font-bold">Titel</div>
             <input

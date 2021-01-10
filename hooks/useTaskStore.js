@@ -142,14 +142,14 @@ export function useTaskStore() {
 
       setTasks(newTasks)
     },
-    reorderLists ({ previousIndex, index }) {
+    reorderLists({ previousIndex, index }) {
       const listArray = Array.from(lists)
 
       const [list] = listArray.splice(previousIndex, 1)
       listArray.splice(index, 0, list)
 
       setLists(new Map(listArray))
-    }
+    },
   }
 
   return [lists, tasks, methods]

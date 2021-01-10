@@ -20,9 +20,20 @@ export default function TaskView({ task, lists, update, del }) {
     const data = new FormData(form.current)
     const newTask = { id: task.id }
     for (const [key, value] of data.entries()) {
-      set(newTask, key, value)
+      console.log(key)
+      switch (key) {
+        case "tags":
+          const tags = value
+            .split(",")
+            .map((tag) => tag.trim().toLowerCase())
+            .filter(Boolean)
+          set(newTask, key, tags)
+          break
+        default:
+          set(newTask, key, value)
+          break
+      }
     }
-
     update(newTask)
     setLocation("/")
   }
@@ -38,7 +49,7 @@ export default function TaskView({ task, lists, update, del }) {
     }
   }
 
-  function handleKeyPress(e) {
+  function handleKeyUp(e) {
     if (e.key === "Escape") {
       setLocation("/")
     }
@@ -51,11 +62,11 @@ export default function TaskView({ task, lists, update, del }) {
     >
       <div
         ref={modal}
-        className="bg-white p-4 rounded w-full max-w-2xl max-h-full overflow-auto"
+        className="bg-white rounded w-full max-w-2xl max-h-full overflow-auto"
         tabIndex={0}
-        onKeyPress={handleKeyPress}
+        onKeyUp={handleKeyUp}
       >
-        <form ref={form} onSubmit={handleSubmit}>
+        <form class="p-4" ref={form} onSubmit={handleSubmit}>
           <label className="block pb-2">
             <div class="pb-2 font-bold">Titel</div>
             <input
@@ -78,10 +89,10 @@ export default function TaskView({ task, lists, update, del }) {
             <div class="pb-2 font-bold">Tag</div>
             <input
               className="block w-full bg-gray-100 rounded p-3"
-              name="tags.0"
-              id="tags.0"
+              name="tags"
+              id="tags"
               type="text"
-              value={task.tags[0]}
+              value={task.tags.join(", ")}
             />
           </label>
           <div class="flex items-end">

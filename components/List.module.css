@@ -22,7 +22,7 @@
 }
 
 .item {
-  @apply bg-white rounded p-3 mb-2 select-none border-2 border-white;
+  @apply block bg-white rounded p-3 mb-2 select-none border-2 border-white;
 }
 
 .itemDragging {

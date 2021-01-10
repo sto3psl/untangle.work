@@ -99,7 +99,10 @@ function App() {
                       index={index}
                       tags={item.tags}
                     >
-                      {item.doc.title}
+                      <h3 class="font-bold">{item.doc.title}</h3>
+                      <div class={styles.description}>
+                        {item.doc?.description}
+                      </div>
                     </ListItem>
                   )
                 }}
