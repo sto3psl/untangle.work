@@ -3,6 +3,21 @@ import { Store, set, get } from "idb-keyval"
 
 const untangleStore = new Store("untangle", "untangle-store")
 
+/**
+ * @typedef Task
+ * @property {String} id
+ * @property {TaskDoc} doc
+ * @property {String} list
+ * @property {String[]} tags
+ */
+
+/**
+ * @typedef TaskDoc
+ * @property {String} title
+ * @property {String} description
+ */
+
+/** @type {Task} */
 const INITIAL_TASK = {
   id: "task-0",
   doc: {
@@ -25,8 +40,6 @@ async function writeInitialData() {
   await set("LISTS", DEFAULT_LISTS, untangleStore)
   await set("TASKS", { [INITIAL_TASK.id]: INITIAL_TASK }, untangleStore)
 }
-
-// writeInitialData()
 
 async function readFromDB() {
   const tasks = await get("TASKS", untangleStore)
@@ -65,6 +78,12 @@ export function useTaskStore() {
   }, [state, lists, tasks])
 
   const methods = {
+    /**
+     * save task
+     *
+     * @param {Task} task
+     * @return {Task}
+     */
     async save(task) {
       task.id = `task-${Object.keys(tasks).length}`
 
@@ -79,6 +98,11 @@ export function useTaskStore() {
       setLists(newLists)
       return task
     },
+    /**
+     * update task
+     *
+     * @param {Task} updatedTask
+     */
     update(updatedTask) {
       const oldTask = tasks[updatedTask.id]
       if (oldTask.list !== updatedTask.list) {
@@ -102,6 +126,11 @@ export function useTaskStore() {
 
       setTasks(newTasks)
     },
+    /**
+     * delete task
+     *
+     * @param {Task} task
+     */
     del(task) {
       const newTasks = { ...tasks }
       newTasks[task.id] = undefined
