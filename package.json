@@ -15,6 +15,7 @@
     "@snowpack/plugin-postcss": "1.0.11",
     "@snowpack/plugin-webpack": "2.2.0",
     "autoprefixer": "10.1.0",
+    "classnames": "2.2.6",
     "hashbow": "1.1.1",
     "idb-keyval": "3.2.0",
     "ionicons": "5.2.3",

@@ -13,6 +13,8 @@ import NewTaskView from "./components/NewTaskView.jsx"
 import { useTaskStore } from "./hooks/useTaskStore"
 
 import styles from "./index.module.css"
+import { ButtonPrimary, ButtonText } from "./components/Buttons"
+import { usePersistedData } from "./hooks/usePersistedData"
 
 function App() {
   const [
@@ -20,6 +22,7 @@ function App() {
     tasks,
     { save, update, del, updatePosition, changeList, reorderLists },
   ] = useTaskStore()
+  const [isPersisted, askPermission] = usePersistedData()
 
   function onDragEnd({ source, destination, type }) {
     // dropped outside the list
@@ -66,18 +69,17 @@ function App() {
 
   return (
     <Fragment>
-      <header className="h-full sticky top-0 left-0 flex items-center w-screen overflow-auto z-10 bg-white py-3">
+      <header className="h-full sticky top-0 left-0 flex flex-wrap items-center w-screen overflow-auto z-10 bg-white py-3">
         <h1 className="text-2xl px-2 font-black">
           <span className="bg-gradient-to-r from-pink-700 to-red-500 text-transparent bg-clip-text">
             🐘 untangle.work
           </span>
         </h1>
-        <Link
-          href="/neu"
-          className="py-2 px-4 ml-auto mr-2 bg-gradient-to-r to-blue-800 from-blue-600 rounded-lg text-blue-100"
-        >
-          ✚ Neu
-        </Link>
+        <div class="ml-auto mr-2 space-x-2">
+          <ButtonPrimary component={Link} href="/neu">
+            ✚ Neu
+          </ButtonPrimary>
+        </div>
       </header>
       <main className="grid col-span-2">
         <DragDropContext onDragEnd={onDragEnd}>
@@ -118,6 +120,17 @@ function App() {
         </DragDropContext>
       </main>
       <footer className="h-full sticky left-0 flex"></footer>
+      {!isPersisted ? (
+        <div class="fixed bottom-4 right-4 w-80 p-4 rounded bg-blue-200 shadow-lg border-2 border-blue-400">
+          <p class="text-gray-900">
+            Um Daten dauerhaft speichern zu können, musst du "Persistent
+            Storage" aktivieren!
+          </p>
+          <div class="flex justify-end">
+            <ButtonText onClick={askPermission}>Aktivieren</ButtonText>
+          </div>
+        </div>
+      ) : null}
       <Switch>
         <Route path="/neu">
           <NewTaskView create={save} lists={lists} />

@@ -5,6 +5,7 @@ import { Link, useLocation } from "wouter-preact"
 import get from "lodash-es/get"
 import set from "lodash-es/set"
 import styles from "./TaskView.module.css"
+import { ButtonPrimary } from "./Buttons"
 
 export default function NewTaskView({ create, lists }) {
   const [, setLocation] = useLocation()
@@ -89,12 +90,9 @@ export default function NewTaskView({ create, lists }) {
                 </select>
               </div>
             </label>
-            <button
-              type="submit"
-              className="ml-auto py-2 px-4 bg-gradient-to-r to-blue-800 from-blue-600 rounded-lg text-blue-100"
-            >
-              Erstellen
-            </button>
+            <div class="ml-auto">
+              <ButtonPrimary type="submit">Erstellen</ButtonPrimary>
+            </div>
           </div>
         </form>
         <Link class="absolute top-0 right-0 rounded p-3" href="/">

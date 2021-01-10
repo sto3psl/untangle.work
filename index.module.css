@@ -1,7 +1,9 @@
 :global(#root) {
-  @apply grid h-screen w-max z-10;
+  @apply grid h-screen w-max z-10 overflow-y-hidden;
   grid-template-rows: auto 1fr;
   grid-template-columns: auto auto;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
 }
 
 :global(:focus) {

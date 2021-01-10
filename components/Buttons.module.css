@@ -1,0 +1,37 @@
+.normal {
+  @apply inline-block py-2 px-4 bg-gray-100 rounded-lg text-gray-800;
+}
+
+.normal:hover {
+  @apply bg-gray-300;
+}
+
+.normal:active {
+  @apply bg-gray-400;
+}
+
+.primary {
+  composes: normal;
+  @apply bg-gradient-to-r to-blue-800 from-blue-600 rounded-lg text-blue-100;
+}
+
+.primary:hover {
+  @apply from-pink-700 to-red-500;
+}
+
+.primary:active {
+  @apply from-pink-800 to-red-600;
+}
+
+.text {
+  composes: normal;
+  @apply bg-transparent text-blue-800;
+}
+
+.text:hover {
+  @apply bg-gradient-to-r to-blue-700 from-blue-500 text-blue-100;
+}
+
+.text:active {
+  @apply bg-gradient-to-r to-blue-800 from-blue-600 text-blue-100;
+}

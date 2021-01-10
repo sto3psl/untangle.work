@@ -96,6 +96,7 @@ export function useTaskStore() {
       list.push(task.id)
       newLists.set(task.list, list)
       setLists(newLists)
+
       return task
     },
     /**

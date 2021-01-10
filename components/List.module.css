@@ -9,7 +9,6 @@
 }
 
 .draggingOver {
-  composes: dropList;
   @apply bg-gradient-to-r to-blue-300 from-blue-400;
 }
 
@@ -18,7 +17,7 @@
 }
 
 .draggingOverHorizontal {
-  composes: dropListHorizontal;
+  @apply bg-gradient-to-r to-blue-300 from-blue-400;
 }
 
 .item {
@@ -26,6 +25,9 @@
 }
 
 .itemDragging {
-  composes: item;
-  @apply border-blue-400;
+  @apply border-blue-500;
+}
+
+.highlight {
+  @apply bg-blue-200 border-blue-500;
 }

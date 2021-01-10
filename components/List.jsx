@@ -1,7 +1,8 @@
 /* @jsx h */
 import { h } from "preact"
-import { Link } from "wouter-preact"
+import { Link, useRoute } from "wouter-preact"
 import { Droppable, Draggable } from "react-beautiful-dnd"
+import cx from "classnames"
 import hashbow from "hashbow"
 import styles from "./List.module.css"
 
@@ -27,11 +28,9 @@ export function List({ id, index, children, items, title, renderListItem }) {
                 <div className="overflow-y-scroll rounded">
                   <div
                     ref={provided.innerRef}
-                    className={
-                      snapshot.isDraggingOver
-                        ? styles.draggingOver
-                        : styles.dropList
-                    }
+                    className={cx(styles.dropList, {
+                      [styles.draggingOver]: snapshot.isDraggingOver,
+                    })}
                   >
                     {items.map(renderListItem)}
                     {provided.placeholder}
@@ -53,11 +52,9 @@ export function Board({ id, children, items, renderListItem }) {
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
-          className={
-            snapshot.isDraggingOver
-              ? styles.draggingOverHorizontal
-              : styles.dropListHorizontal
-          }
+          className={cx(styles.dropListHorizontal, {
+            [styles.draggingOverHorizontal]: snapshot.isDraggingOver,
+          })}
         >
           {items.map(renderListItem)}
           {provided.placeholder}
@@ -68,8 +65,11 @@ export function Board({ id, children, items, renderListItem }) {
 }
 
 export function ListItem({ id, index, children, tags }) {
+  const [match, params] = useRoute("/:id")
   const filteredTags = tags.filter(Boolean)
   const visibleTags = 4
+  const highlight = params?.id === id
+
   return (
     <Draggable draggableId={id} index={index}>
       {(provided, snapshot) => (
@@ -78,11 +78,14 @@ export function ListItem({ id, index, children, tags }) {
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
-            className={snapshot.isDragging ? styles.itemDragging : styles.item}
+            className={cx(styles.item, {
+              [styles.highlight]: highlight,
+              [styles.itemDragging]: snapshot.isDragging,
+            })}
             style={provided.draggableProps.style}
           >
             {filteredTags.length ? (
-              <div className="pb-2space-y-1">
+              <div>
                 {filteredTags.slice(0, visibleTags).map((tag) => {
                   const color = hashbow(tag, 90)
                   return (

@@ -4,6 +4,7 @@ import { useRef, useEffect } from "preact/hooks"
 import { Link, useLocation } from "wouter-preact"
 import set from "lodash-es/set"
 import styles from "./TaskView.module.css"
+import { Button, ButtonPrimary } from "./Buttons"
 
 export default function TaskView({ task, lists, update, del }) {
   const [, setLocation] = useLocation()
@@ -106,19 +107,12 @@ export default function TaskView({ task, lists, update, del }) {
                 </select>
               </div>
             </label>
-            <button
-              type="button"
-              onClick={handleDelete}
-              className="ml-auto py-2 px-3 bg-gray-100 rounded-lg text-gray-800"
-            >
-              ❌
-            </button>
-            <button
-              type="submit"
-              className="ml-1 py-2 px-4 bg-gradient-to-r to-blue-800 from-blue-600 rounded-lg text-blue-100"
-            >
-              Speichern
-            </button>
+            <div class="ml-auto flex space-x-2">
+              <Button type="button" onClick={handleDelete}>
+                ❌
+              </Button>
+              <ButtonPrimary type="submit">Speichern</ButtonPrimary>
+            </div>
           </div>
         </form>
         <Link class="absolute top-0 right-0 rounded p-3" href="/">
