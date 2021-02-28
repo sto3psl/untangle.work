@@ -70,16 +70,18 @@ function App() {
 
   return (
     <Fragment>
-      <header className="h-full sticky top-0 left-0 flex flex-wrap items-center w-screen overflow-auto z-10 bg-white py-3">
-        <h1 className="text-2xl px-2 font-black">
-          <span className="bg-gradient-to-r from-pink-700 to-red-500 text-transparent bg-clip-text">
-            🐘 untangle.work
-          </span>
-        </h1>
-        <div class="ml-auto mr-2 space-x-2">
-          <ButtonPrimary component={Link} href="/neu">
-            ✚ Neu
-          </ButtonPrimary>
+      <header className="pb-16">
+        <div className="fixed top-0 left-0 flex flex-wrap items-center w-screen overflow-auto z-10 bg-white py-3">
+          <h1 className="text-2xl px-2 font-black">
+            <span className="bg-gradient-to-r from-pink-700 to-red-500 text-transparent bg-clip-text">
+              🐘 untangle.work
+            </span>
+          </h1>
+          <div class="ml-auto mr-2 space-x-2">
+            <ButtonPrimary component={Link} href="/neu">
+              ✚ Neu
+            </ButtonPrimary>
+          </div>
         </div>
       </header>
       <main className="grid col-span-2">

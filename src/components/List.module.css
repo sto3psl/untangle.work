@@ -1,6 +1,6 @@
 .list {
   @apply grid h-full rounded;
-  width: clamp(15rem, 35vw, 20rem);
+  width: min(18rem, 80vw);
   grid-template-rows: auto minmax(0, 1fr);
 }
 
