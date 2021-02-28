@@ -1,5 +1,5 @@
 /* @jsx h */
-import "./main.css"
+import "windi.css"
 import { h, Fragment } from "preact"
 import ReactDOM from "preact/compat"
 import { Route, Link, Switch } from "wouter-preact"
@@ -12,6 +12,7 @@ import NewTaskView from "./components/NewTaskView.jsx"
 
 import { useTaskStore } from "./hooks/useTaskStore"
 
+import "./main.css"
 import styles from "./index.module.css"
 import { ButtonPrimary, ButtonText } from "./components/Buttons"
 import { usePersistedData } from "./hooks/usePersistedData"

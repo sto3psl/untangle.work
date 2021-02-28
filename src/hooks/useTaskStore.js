@@ -1,7 +1,7 @@
 import { useState, useEffect } from "preact/hooks"
-import { Store, set, get } from "idb-keyval"
+import { createStore, set, get } from "idb-keyval"
 
-const untangleStore = new Store("untangle", "untangle-store")
+const untangleStore = createStore("untangle", "untangle-store")
 
 /**
  * @typedef Task

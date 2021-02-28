@@ -1,4 +1,8 @@
-:global(#root) {
+* {
+  position: relative;
+}
+
+#root {
   @apply grid h-screen w-max z-10 overflow-y-hidden;
   grid-template-rows: auto 1fr;
   grid-template-columns: auto auto;
@@ -6,13 +10,6 @@
   min-height: -webkit-fill-available;
 }
 
-:global(:focus) {
+:focus {
   @apply focus:outline-none focus:ring focus:border-blue-300;
-}
-
-.description {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  @apply text-sm text-gray-600 leading-5 overflow-hidden;
 }
